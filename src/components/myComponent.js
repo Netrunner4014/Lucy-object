@@ -1,19 +1,50 @@
 import React from "react";
-class Touchme extends React.Component {
+class MyComponent extends React.Component {
 
-    handleClickButton = () => {
-        alert("click me")
+    state = {
+        FirstName: "",
+        LastName: ""
+
+    }
+    OnChangeFirstName = (event) => {
+        this.setState({
+            FirstName: event.target.value
+        })
+    }
+    OnChangeLastName = (event) => {
+        this.setState({
+            LastName: event.target.value
+        })
+    }
+    handleSubmit = (event) => {
+        event.preventDefault()
+        console.log("final-render", this.state)
     }
 
     render() {
+        // console.log("re-render: " , this.state)
         return (
             <>
-                <div className="Click">
-                    <button onClick={ () => this.handleClickButton()}>Touch me 
-                    </button>
-                </div>
+            <form>
+                <label htmlFor="fname">First name:</label><br/>
+                <input 
+                type="text" 
+                value={this.state.FirstName}
+                onChange = {(event) => this.OnChangeFirstName(event)}
+                /><br/>
+                
+                <label htmlFor="lname"> Last name:</label><br/>
+                <input 
+                type="text" 
+                value={this.state.LastName}
+                onChange={(event) => this.OnChangeLastName(event)}
+                /><br/><br/>
+            <input type="submit"
+                onClick={(event) => this.handleSubmit(event)}
+            />
+        </form> 
             </>
         )
     }
 }
-export default Touchme;
+export default MyComponent;
