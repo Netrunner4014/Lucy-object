@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.scss';
+import Touchme from '../components/myComponent.js';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         >
           Learn React
         </a>
+        <Touchme/>
       </header>
     </div>
   );
