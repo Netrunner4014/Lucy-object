@@ -1,50 +1,33 @@
-import React from "react";
-class MyComponent extends React.Component {
-
-    state = {
-        FirstName: "",
-        LastName: ""
-
-    }
-    OnChangeFirstName = (event) => {
-        this.setState({
-            FirstName: event.target.value
-        })
-    }
-    OnChangeLastName = (event) => {
-        this.setState({
-            LastName: event.target.value
-        })
-    }
-    handleSubmit = (event) => {
-        event.preventDefault()
-        console.log("final-render", this.state)
-    }
-
-    render() {
-        // console.log("re-render: " , this.state)
-        return (
-            <>
-            <form>
-                <label htmlFor="fname">First name:</label><br/>
-                <input 
-                type="text" 
-                value={this.state.FirstName}
-                onChange = {(event) => this.OnChangeFirstName(event)}
-                /><br/>
-                
-                <label htmlFor="lname"> Last name:</label><br/>
-                <input 
-                type="text" 
-                value={this.state.LastName}
-                onChange={(event) => this.OnChangeLastName(event)}
-                /><br/><br/>
-            <input type="submit"
-                onClick={(event) => this.handleSubmit(event)}
-            />
-        </form> 
-            </>
-        )
-    }
+import '../components/myComponent.scss';
+import { useEffect, useState} from "react";
+import axios from 'axios';
+const baseURL = "https://npm-trends-proxy.uidotdev.workers.dev/npm/downloads/point/last-week/react";
+function MyComponent() {
+    const[data, setData] = useState([])
+    useEffect(() => {
+        axios.get(baseURL)
+        .then(res => setData(res.data))
+        .catch(err => console.log(err));
+    },[])
+    return (
+        <div>
+        <h1>Reactjs</h1>
+        <table>
+            <thead><tr>
+            <th>Downloads</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr></thead>
+            <tbody>
+            {[data].map((item, index) =>{
+                return (<tr key={index}>
+            <td>{item.downloads}</td>
+            <td>{item.start}</td>
+            <td>{item.end}</td>
+        </tr>)
+            })}
+            </tbody>
+        </table></div>
+    )
 }
 export default MyComponent;
