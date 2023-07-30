@@ -9,7 +9,7 @@ const App = () => {
   
   
   const handleEventClick = (event) => {
-    console.log(limit)
+    console.log("user: ",limit)
     setLimit(length);
   }
 
@@ -22,7 +22,7 @@ const App = () => {
       <header className="App-header">
       <h1>related_search_query</h1>
       <div className='limit'>
-        <input type='number' value= {length} min="1" max="2" onChange={(event) => handleOnchangeInput(event)}>
+        <input type='number' value= {length} min="1" max="50" onChange={(event) => handleOnchangeInput(event)}>
         </input>
         <button type='button' onClick={(event) => handleEventClick(event)}>limit</button>
       </div>

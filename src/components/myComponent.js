@@ -8,10 +8,9 @@ function MyComponent(props) {
     
     useEffect(() => {
         const limit = props.limit
-        const baseURL = ("https://npm-trends-proxy.uidotdev.workers.dev/s/related?search_query%5B%5D=angular&search_query%5B%5D=react&search_query%5B%5D=vue&limit="+limit);
+        const baseURL = (`https://npm-trends-proxy.uidotdev.workers.dev/s/related?search_query%5B%5D=angular&search_query%5B%5D=react&search_query%5B%5D=vue&limit=${limit}`);
         if (limit <= 0 || limit > 50){
             alert('1<=limit<=50')
-
             return;
         }
         axios.get(baseURL)
