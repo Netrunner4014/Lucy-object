@@ -2,17 +2,24 @@ import '../components/myComponent.scss';
 import { useEffect, useState} from "react";
 import axios from 'axios';
 import moment from 'moment/moment';
-const baseURL = "https://npm-trends-proxy.uidotdev.workers.dev/s/related?search_query%5B%5D=angular&search_query%5B%5D=react&search_query%5B%5D=vue&limit=10";
-function MyComponent() {
+
+function MyComponent(props) {
     const[data, setData] = useState([])
+    
     useEffect(() => {
+        const limit = props.limit
+        const baseURL = ("https://npm-trends-proxy.uidotdev.workers.dev/s/related?search_query%5B%5D=angular&search_query%5B%5D=react&search_query%5B%5D=vue&limit="+limit);
+        if (limit <= 0 || limit > 50){
+            alert('1<=limit<=50')
+
+            return;
+        }
         axios.get(baseURL)
         .then(res => setData(res.data))
         .catch(err => console.log(err));
-    },[])
+    },[props.limit])
     return (
         <div>
-        <h1>related_search_query</h1>
         <table>
             <thead><tr>
             <th>slug</th>
@@ -22,11 +29,10 @@ function MyComponent() {
             <th>updated_at</th>
         </tr></thead>
             <tbody>
-            {console.log(data)}
+            {/* {console.log(data)} */}
             {data.map((id, index) =>{
                 id.created = moment(id.created_at).format("DD/MM/YYYY")
                 id.updated = moment(id.updated_at).format("DD/MM/YYYY")
-                {/* console.log(id.created_at) */}
                 return (<tr key={index}>
             <td>{id.slug}</td>
             <td>{id.view_count}</td>
